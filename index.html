@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery.mini.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <title>生日快乐</title>
+</head>
+<body>
+    <div class="row justify-content-center box1">
+        <img src="img/01.jpg" alt="happy" class="index-img">
+    </div>
+    <div class="row justify-content-center">
+        <button type="button" class="btn btn-primary btn-lg">继续</button>
+    </div>
+    <div class="text-effect">
+        <span>HAPPY</span>
+        <span>BIRTHDAY</span>
+      </div>
+    <script>
+        $(function(){   
+
+            $(".text-effect").hide();
+            $(".box1").hide().fadeIn(3000).siblings().children(".btn").hide().delay(1500).fadeIn(500);
+            $("button").click(()=>{
+                $("button").hide();
+                $(".box1").hide();
+                $(".text-effect").show();
+                var w = window.screen.width;
+        var h = window.screen.height;
+        //记录的个数
+        var count = 0;
+        var drop = function() {
+            //下落的数度
+            this.v = Math.random() * 1 +0.1;
+            this.left = Math.random() * w;
+        }
+        //构造函数
+        drop.prototype = {
+            //定义构造函数
+            constructor: drop,
+            //创建雨滴
+            create: function() {
+                count++;
+                var $drop = $('<div class="container1"><div>生日快乐</div></div>');
+                $drop.appendTo('body');
+            },
+    //       运动时离左边的距离, last 和 frist 不同
+            addCss: function() {
+                $('.container1:last').css({
+                    left: this.left + 'px',
+                    "color": "rgb(" + (255 * Math.random()) + "," + (255 * Math.random()) + "," + (255 * Math.random()) + ")",
+                    "font-size":Math.random()*30,
+                    "transform":"rotate(Math.random()deg)"
+                })
+            },
+            //下落的速度和时间。
+            dropEvent: function() {
+                var time = Math.floor(h / this.v);
+                // time = time+30;
+                $('.container1:last').animate({
+                    top: h + 'px',
+                    opacity: '1'
+                }, time)
+            }
+        }
+        //更新
+        function updata() {
+            if (count > 300) {
+                for (var i = 0; i < 100; i++) {
+                    $('div:first').remove(); 
+                }
+                count = 10;
+            }
+        }
+    //  50秒进行执行
+        setInterval(function() {
+            var Drop = new drop();
+            Drop.create();
+            Drop.addCss();
+            Drop.dropEvent();
+            updata();
+        }, 100)
+            })
+        })
+    </script>
+</body>
+</html>
